@@ -4,10 +4,10 @@ if [[ $# -ne 1 ]]; then
         printf "Expected one domain got %d\n" $#
 	exit 1
 else
-	AVALIABLE_MACHINES=$(sudo virsh list --all)
-	IS_AVALIABLE=$(printf "%s" "$AVALIABLE_MACHINES" | awk -v domain=$1 'NR>2 && $2 == domain {printf "%s\n", $2}')
-	if [[ -n $IS_AVALIABLE ]]; then
-		MACHINE_STATUS=$(printf "%s" "$AVALIABLE_MACHINES" | awk -v domain=$1 '$2 == domain {printf "%s%s\n", $3, $4}')
+	VIRSH_OUTPUT=$(sudo virsh list --all)
+	IS_AVAILABLE=$(printf "%s" "$VIRSH_OUTPUT" | awk -v domain=$1 'NR>2 && $2 == domain {printf "%s\n", $2}')
+	if [[ -n $IS_AVAILABLE ]]; then
+		MACHINE_STATUS=$(printf "%s" "$VIRSH_OUTPUT" | awk -v domain=$1 '$2 == domain {printf "%s%s\n", $3, $4}')
 		
 		[[ $MACHINE_STATUS != 'running' ]] && sudo virsh start "$1"
 
@@ -46,9 +46,9 @@ else
 		printf '\n'
 
 	else
-		printf "%s is not avaliable\n" "$1"
-		printf 'Avaliable domains are:\n'
-		printf "%s\n" "$AVALIABLE_MACHINES" | awk 'NR>2{printf "%s\n", $2}'
+		printf "%s is not available\n" "$1"
+		printf 'Available domains are:\n'
+		printf "%s\n" "$VIRSH_OUTPUT" | awk 'NR>2{printf "%s\n", $2}'
 	fi
 fi
 
