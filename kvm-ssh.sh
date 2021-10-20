@@ -30,7 +30,6 @@ else
 		# ssh "$USERNAME@$IP"
 		# or just hardcode it
 		
-		
 		# Asumming you're using the same username as the host machine
 		ssh "$USER@$IP" 2>/dev/null
 		CONNECION_STATUS=$?
