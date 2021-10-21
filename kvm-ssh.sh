@@ -34,9 +34,7 @@ else
 		ssh "$USER@$IP" 2>/dev/null
 		CONNECION_STATUS=$?
 		if [[ $CONNECION_STATUS -ne 0 ]]; then
-   			printf 'Trying to connect.'
-		fi
-		if [[ $CONNECION_STATUS -ne 0 ]]; then
+			printf 'Trying to connect.'
 			while ! ssh "$USER@$IP" 2>/dev/null ; do
    				sleep 3
    				printf '.'
